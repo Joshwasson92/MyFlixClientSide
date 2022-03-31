@@ -8,7 +8,8 @@ export class MovieView extends React.Component {
     return (
       <div className="movie-view">
         <div className="movie-poster">
-        <Card.Img crossorigin="anonymous" variant="top" src={movie.ImagePath} />        </div>
+          <img crossorigin="anonymous" src={movie.ImagePath} />
+        </div>
         <div className="movie-title">
           <span className="label">Title: </span>
           <span className="value">{movie.Title}</span>
@@ -17,6 +18,10 @@ export class MovieView extends React.Component {
           <span className="label">Description: </span>
           <span className="value">{movie.Description}</span>
         </div>
+        {/* this needs to be fixed.  <div className="genre">
+            <span className="label">Genre: </span>
+            <span className="value">{movie.Genre}</span>
+        </div> */}
         <button onClick={() => { onBackClick(null); }}>Back</button>
 
        </div>
