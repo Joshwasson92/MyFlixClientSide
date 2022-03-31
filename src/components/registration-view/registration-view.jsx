@@ -72,17 +72,17 @@ const handleSubmit =(e) => {
 return (
     <Form>
         <Form.Group controlId='formUsername'>
-        <Form.Label>Username:</Form.Label>
+        <Form.label>Username:</Form.label>
             <Form.Control type='text' placeholder='Enter Username' value={username} onChange={e => setUsername(e.target.value)} />
             {usernameErr && <p>{usernameErr}</p>}
         </Form.Group>
         <Form.Group>
-            <Form.Label>Password</Form.Label>
+            <Form.label>Password</Form.label>
             <Form.Control type='password' placeholder='password' value={password} onChange={e => setPassword(e.target.value)} />
             {passwordErr && <p>{passwordErr}</p>}
         </Form.Group>
         <Form.Group controlId='formEmail'>
-            <Form.Label>Email:</Form.Label>
+            <Form.label>Email:</Form.label>
             <Form.Control type='text' placeholder='user@example.com' value={email} onChange={e => setPassword(e.target.value)} />
 
         </Form.Group>

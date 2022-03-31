@@ -9,7 +9,7 @@ export function LoginView(props) {
     const [ password, setPassword ] = useState ('');
     
 
-    // Hook for input
+    // Hook for inputs
 
     const [ usernameErr, setUsernameErr ] = useState('');
     const [ passwordErr, setPasswordErr ] = useState('');
@@ -18,14 +18,14 @@ export function LoginView(props) {
     const validate =() => {
         let isReq = true;
         if(!username){
-            setUsernameErr('Username is required');
+            setUsernameErr('Username is Required');
             isReq = false;
         }else if(username.length < 2 ){
             setUsernameErr('Username must be 2 characters long');
             isReq = false;
         }
         if(!password){
-            setPasswordErr('Password required');
+            setPasswordErr('Password Required');
             isReq = false;
         }else if(password.length < 6){
             setPassword('Password must be 6 characters long');
@@ -49,7 +49,7 @@ export function LoginView(props) {
                 props.onLoggedIn(data);
             })
             .catch(e => {
-                console.log('User does not exist!')
+                console.log('Invalid username or password')
             });
         }
     }
@@ -58,19 +58,55 @@ export function LoginView(props) {
 return (
     <Form>
         <Form.Group controlId='formUsername'>
-            <Form.Label>Username:</Form.Label>
-            <Form.Control type="text" placeholder="Enter Username" value={username} onChange={e => setUsername(e.target.value)} />
+        <Form.Label>Username</Form.Label>            <Form.Control type="text" placeholder="Enter Username" value={username} onChange={e => setUsername(e.target.value)} />
             {usernameErr && <p>{usernameErr}</p>}
         </Form.Group>
         <Form.Group controlId="formPassword">
-            <Form.Label>Password</Form.Label>
+        <Form.Label>Password</Form.Label>
             <Form.Control type='password' placeholder='password' value={password} onChange={e => setPassword(e.target.value)} />
             {passwordErr && <p>{passwordErr}</p>}
         </Form.Group>
         <Button variant='primary' type='submit' onClick={handleSubmit}>
             Submit
         </Button>
-        
     </Form>
  )
 }
+// export function LoginView(props) {
+//   const [username, setUsername] = useState('');
+//   const [password, setPassword] = useState('');
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     /* Send a request to the server for auth */
+//     axios.post('https://jwmovieapi.herokuapp.com/login', {
+//         Username: username,
+//         Password: password
+//     })
+//     .then(response => {
+//         const data = response.data;
+//         props.onLoggedIn(data);
+//     })
+//     .catch(e => {
+//         console.log('User does not exist!')
+//     });
+// }
+
+
+//   return (
+//     <Form>
+//       <Form.Group controlId="formUsername">
+//         <Form.Label>Username:</Form.Label>
+//         <Form.Control type="text" placeholder="Enter Username" value={username} onChange={e => setUsername(e.target.value)} />
+//       </Form.Group>
+
+//       <Form.Group controlId="formPassword">
+//         <Form.Label>Password:</Form.Label>
+//         <Form.Control type="password" onChange={e => setPassword(e.target.value)} />
+//       </Form.Group>
+//       <Button variant="primary" type="submit" onClick={handleSubmit}>
+//         Submit
+//       </Button>
+//     </Form>
+//   );
+// }
