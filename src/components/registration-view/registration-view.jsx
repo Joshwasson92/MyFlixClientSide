@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import './registration-view.scss';
+import {Button, Row, Container, Col, Form} from 'react-bootstrap/Button';
 import axios from 'axios';
 
 export function RegistrationView(props) {
@@ -10,42 +12,44 @@ const [email, setEmail ] = useState('');
 
 // Hooks
 
-const [ usernameErr, setUsernameErr ] = useState('');
-const [ passwordErr, setPasswordErr ] = useState('');
-const [ emailErr, setEmailErr ] = useState('');
+const [values, setValues] = useState({
+    nameErr: '',
+    usernameErr: '',
+    passwordErr: '',
+    emailErr: '',
+
+});
+
 
 //user validation
 
 const validate =() => {
     let isReq = true;
+
     if(!username){
-        setUsernameErr('Username is required');
+        setValues('Username is required');
         isReq = false;
 
     }else if(username.length< 2) {
-        setUsernameErr('Username must be atleast 2 characters long');
+        setValues({...values, usernameErr: 'Username must be atleast 2 characters long'});
         isReq = false;
-
     }
     if(!password){
-        setPasswordErr('Password is required');
+        setValues({...values, passwordErr: 'Password is required'});
         isReq= false;
 
     }else if(password.length <6){
-        setPassword('Password must be at least 6 characters long');
+        setValues({...values, passwordErr: 'Password must be at least 6 characters long'});
         isReq = false
     }
-
     if(!email){
-        setEmailErr('Email address is required');
+        setValues({...values, emailErr: 'Email address is required'});
         isReq = false;
     }else if(email.indexOf('@') === -1 ) {
         setValues({...values,emailErr: 'Email is invalid'});
         isReq = false
     }
     
-
-
 
     return isReq;
 }
@@ -59,34 +63,52 @@ const handleSubmit =(e) => {
             Email: email
         })
         .then(response =>{
-            const data= response.data;
-            props.onLoggedIn(data);
+            const data = response.data;
+            console.log(data);
+            alert('Registration successful, Please login.');
+            window.open('/','_self');
         })
-        .catch( e => {
-            console.log('Invalid information entered')
-        })
+        .catch( response => {
+            alert('An error occured')
+        });
     }
-}
+};
 
 
 return (
-    <Form>
-        <Form.Group controlId='formUsername'>
-        <Form.label>Username:</Form.label>
-            <Form.Control type='text' placeholder='Enter Username' value={username} onChange={e => setUsername(e.target.value)} />
-            {usernameErr && <p>{usernameErr}</p>}
-        </Form.Group>
-        <Form.Group>
-            <Form.label>Password</Form.label>
-            <Form.Control type='password' placeholder='password' value={password} onChange={e => setPassword(e.target.value)} />
-            {passwordErr && <p>{passwordErr}</p>}
-        </Form.Group>
-        <Form.Group controlId='formEmail'>
-            <Form.label>Email:</Form.label>
-            <Form.Control type='text' placeholder='user@example.com' value={email} onChange={e => setPassword(e.target.value)} />
+<Row className="mt-5">
+    <Col md={12}>    
+        <Form>  
+            <Form.Group controlId='formUsername' className='reg-form-inputs'>
+            <Form.label>Username:</Form.label>
+                <Form.Control type='text' placeholder='Enter Username' value={username} onChange={e => setUsername(e.target.value)} />
+                {values.usernameErr && <p>{values.usernameErr}</p>}
+            </Form.Group>
+            <Form.Group controlID='formPassword' className='reg-form-inputs'>
+                <Form.label>Password</Form.label>
+                <Form.Control type='password' placeholder='password' value={password} onChange={e => setPassword(e.target.value)} />
+                {values.passwordErr && <p>{values.passwordErr}</p>}
+            </Form.Group>
+            <Form.Group controlId='formEmail' className='reg-form-inputs'>
+                <Form.label>Email:</Form.label>
+                <Form.Control type='text' placeholder='user@example.com' value={email} onChange={e => setPassword(e.target.value)} />]
+                {values.emailErr ** <p>{values.passwordErr}</p>}
+                <Button variant='primary' type='submit' onClick={handleSubmit}>
+                    Submit
+                </Button>
+            </Form.Group>
+        </Form>
+    </Col>
+</Row>
 
-        </Form.Group>
-    </Form>
   );
 
 }
+
+RegistrationView.propTypes = {
+    register: PropTypes.shape({
+        Username: PropTypes.string.isRequired,
+        Password: PropTypes.string.isRequired,
+        Email: PropTypes.string.isRequired
+    }),
+};

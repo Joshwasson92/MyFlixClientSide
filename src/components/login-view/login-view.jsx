@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-
+import { RegistrationView } from '../registration-view/registration-view';
 
 export function LoginView(props) {
     const [ username, setUsername ] = useState ('');
@@ -27,13 +27,11 @@ export function LoginView(props) {
         if(!password){
             setPasswordErr('Password Required');
             isReq = false;
-        }else if(password.length < 6){
-            setPassword('Password must be 6 characters long');
+        }else if(password.length < 2){
+            setPasswordErr('Password must be 6 characters long');
             isReq = false
         }
-
         return isReq;
-
     }
 
     const handleSubmit = (e) => {
@@ -69,44 +67,9 @@ return (
         <Button variant='primary' type='submit' onClick={handleSubmit}>
             Submit
         </Button>
+        <Button variant='primary' onClick={RegistrationView}>
+            Register
+        </Button>
     </Form>
  )
 }
-// export function LoginView(props) {
-//   const [username, setUsername] = useState('');
-//   const [password, setPassword] = useState('');
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     /* Send a request to the server for auth */
-//     axios.post('https://jwmovieapi.herokuapp.com/login', {
-//         Username: username,
-//         Password: password
-//     })
-//     .then(response => {
-//         const data = response.data;
-//         props.onLoggedIn(data);
-//     })
-//     .catch(e => {
-//         console.log('User does not exist!')
-//     });
-// }
-
-
-//   return (
-//     <Form>
-//       <Form.Group controlId="formUsername">
-//         <Form.Label>Username:</Form.Label>
-//         <Form.Control type="text" placeholder="Enter Username" value={username} onChange={e => setUsername(e.target.value)} />
-//       </Form.Group>
-
-//       <Form.Group controlId="formPassword">
-//         <Form.Label>Password:</Form.Label>
-//         <Form.Control type="password" onChange={e => setPassword(e.target.value)} />
-//       </Form.Group>
-//       <Button variant="primary" type="submit" onClick={handleSubmit}>
-//         Submit
-//       </Button>
-//     </Form>
-//   );
-// }
