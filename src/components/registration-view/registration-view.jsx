@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import {Button, Row, Container, Col, Form} from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import './registration-view.scss';
-import {Button, Row, Container, Col, Form} from 'react-bootstrap/Button';
-import axios from 'axios';
+
 
 export function RegistrationView(props) {
 const [username, setUsername ] = useState('');
@@ -13,7 +14,6 @@ const [email, setEmail ] = useState('');
 // Hooks
 
 const [values, setValues] = useState({
-    nameErr: '',
     usernameErr: '',
     passwordErr: '',
     emailErr: '',
@@ -23,13 +23,11 @@ const [values, setValues] = useState({
 
 //user validation
 
-const validate =() => {
+const validate = () => {
     let isReq = true;
-
     if(!username){
-        setValues('Username is required');
+        setValues({...Button, usernameErr: 'Username is required'});
         isReq = false;
-
     }else if(username.length< 2) {
         setValues({...values, usernameErr: 'Username must be atleast 2 characters long'});
         isReq = false;
@@ -54,7 +52,7 @@ const validate =() => {
     return isReq;
 }
 
-const handleSubmit =(e) => {
+const handleSubmit = (e) => {
     e.preventDefault();
     if(isReq){
         axios.post('https://jwmovieapi.herokuapp.com/users', {
@@ -62,7 +60,7 @@ const handleSubmit =(e) => {
             Password: password,
             Email: email
         })
-        .then(response =>{
+        .then(response => {
             const data = response.data;
             console.log(data);
             alert('Registration successful, Please login.');
@@ -76,30 +74,32 @@ const handleSubmit =(e) => {
 
 
 return (
-<Row className="mt-5">
+    <Row className="mt-5">
     <Col md={12}>    
-        <Form>  
-            <Form.Group controlId='formUsername' className='reg-form-inputs'>
-            <Form.label>Username:</Form.label>
-                <Form.Control type='text' placeholder='Enter Username' value={username} onChange={e => setUsername(e.target.value)} />
-                {values.usernameErr && <p>{values.usernameErr}</p>}
-            </Form.Group>
-            <Form.Group controlID='formPassword' className='reg-form-inputs'>
-                <Form.label>Password</Form.label>
-                <Form.Control type='password' placeholder='password' value={password} onChange={e => setPassword(e.target.value)} />
-                {values.passwordErr && <p>{values.passwordErr}</p>}
-            </Form.Group>
-            <Form.Group controlId='formEmail' className='reg-form-inputs'>
-                <Form.label>Email:</Form.label>
-                <Form.Control type='text' placeholder='user@example.com' value={email} onChange={e => setPassword(e.target.value)} />]
-                {values.emailErr ** <p>{values.passwordErr}</p>}
-                <Button variant='primary' type='submit' onClick={handleSubmit}>
-                    Submit
-                </Button>
-            </Form.Group>
-        </Form>
+            <Form>
+                <h3> Sign Up</h3>
+                <p></p>  
+                <Form.Group controlId='formUsername' className='reg-form-inputs'>
+                <Form.label>Username:</Form.label>
+                    <Form.Control type='text' placeholder='Enter Username' value={username} onChange={e => setUsername(e.target.value)} />
+                    {values.usernameErr && <p>{values.usernameErr}</p>}
+                </Form.Group>
+                <Form.Group controlID='formPassword' className='reg-form-inputs'>
+                    <Form.label>Password</Form.label>
+                    <Form.Control type='password' placeholder='password' value={password} onChange={e => setPassword(e.target.value)} />
+                    {values.passwordErr && <p>{values.passwordErr}</p>}
+                </Form.Group>
+                <Form.Group controlId='formEmail' className='reg-form-inputs'>
+                    <Form.label>Email:</Form.label>
+                    <Form.Control type='text' placeholder='user@example.com' value={email} onChange={e => setPassword(e.target.value)} />]
+                    {values.emailErr ** <p>{values.passwordErr}</p>}
+                    <Button variant='primary' type='submit' onClick={handleSubmit}>
+                        Submit
+                    </Button>
+                </Form.Group>
+            </Form>
     </Col>
-</Row>
+    </Row>
 
   );
 
