@@ -48,7 +48,7 @@ export function LoginView(props) {
                 props.onLoggedIn(data);
             })
             .catch(e => {
-                console.log('Invalid username or password')
+                alert('Invalid username or password')
             });
         };
     }
