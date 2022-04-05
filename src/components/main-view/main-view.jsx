@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
 import axios from 'axios';
 import {Container, Row, Col} from 'react-bootstrap';
-import Menu from '../Menu/Menu';
+import menuBar from '../navbar/navbar';
 
 
 
@@ -14,8 +14,8 @@ import { MovieView } from '../movie-view/movie-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import {DirectorView} from'../director-view/director-view';
 import {GenreView} from'../genre-view/genre-view';
-import {ProfileView} from '../profile-view/profile-view';
-import {UserUpdate} from '../profile-view/user-update';
+// import {ProfileView} from '../profile-view/profile-view';
+// import {UserUpdate} from '../profile-view/user-update';
 import  './main-view.scss';
 
 
