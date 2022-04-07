@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import { Link } from "react-router-dom";
+import { Menu } from '../navbar/navbar';
 import { RegistrationView } from '../registration-view/registration-view';
-
+import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
 export function LoginView(props) {
     const [ username, setUsername ] = useState ('');
     const [ password, setPassword ] = useState ('');
@@ -48,14 +50,16 @@ export function LoginView(props) {
                 props.onLoggedIn(data);
             })
             .catch(e => {
-                alert('Invalid username or password')
+                console.log('Invalid username or password')
             });
         };
     }
 
 
 return (
+    
     <Form>
+          <Menu />
       <Form.Group controlId="formUsername">
         <Form.Label>Username:</Form.Label>
         <Form.Control type="text" placeholder="Enter username" value={username} onChange={e => setUsername(e.target.value)} />
@@ -72,6 +76,12 @@ return (
       <Button variant="primary" type="submit" onClick={handleSubmit}>
         Submit
         </Button>
+        <Router>
+      
+       <Link to={`/register`}>
+           <Button variant='link'>Register</Button>
+       </Link>
+       </Router>
     </Form>
   )
 }

@@ -1,8 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect, useHistory }  from "react-router-dom";
 import axios from 'axios';
 import {Container, Row, Col} from 'react-bootstrap';
-import menuBar from '../navbar/navbar';
+import { Menu } from '../navbar/navbar';
+
 
 
 
@@ -14,7 +15,7 @@ import { MovieView } from '../movie-view/movie-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import {DirectorView} from'../director-view/director-view';
 import {GenreView} from'../genre-view/genre-view';
-// import {ProfileView} from '../profile-view/profile-view';
+import {ProfileView} from '../profile-view/profile-view';
 // import {UserUpdate} from '../profile-view/user-update';
 import  './main-view.scss';
 
@@ -71,6 +72,7 @@ onLoggedIn(authData) {
 
 }
 
+
 render() {
     const { movies, user } = this.state;
    
@@ -87,6 +89,9 @@ render() {
           <Container>
         <Row className='main-view justify-content-md-center'>
           <Route exact path="/"  render={() => {
+            if (!user) return <Col>
+            <LoginView movies={movies} onLoggedIn={user => this.onLoggedIn(user)} />
+            </Col>
             return movies.map(m => (
               <Col md={3} key={m._id}>
                 <MovieCard movie={m} />
@@ -94,7 +99,7 @@ render() {
             ))
           }} />
         <Route path='/register' render={() => {
-            if (user) return <Redirector to='/' />
+          if (user) return <Redirect to='/' />
             return <Col lg={8} md={8}>
                 <RegistrationView />
             </Col>
