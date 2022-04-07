@@ -82,12 +82,22 @@ render() {
       </Col>
     </Row>
     if (movies.length === 0) return <div className="main-view" />;
+   
     
     return (
       <Router>
           <Menu user={user} />
           <Container>
         <Row className='main-view justify-content-md-center'>
+     
+        <Route exact path='/register' render={() => {
+          console.log(user);
+          if (user) return <Redirect to='/' />
+            return <Col lg={8} md={8}>
+                <RegistrationView />
+            </Col>
+        }} />
+     
           <Route exact path="/"  render={() => {
             if (!user) return <Col>
             <LoginView movies={movies} onLoggedIn={user => this.onLoggedIn(user)} />
@@ -98,14 +108,9 @@ render() {
               </Col>
             ))
           }} />
-        <Route path='/register' render={() => {
-          if (user) return <Redirect to='/' />
-            return <Col lg={8} md={8}>
-                <RegistrationView />
-            </Col>
-        }} />
 
-          <Route path="/movies/:movieId" render={({ match, history }) => {
+
+          <Route exact path="/movies/:movieId" render={({ match, history }) => {
               const movie = movies.find(m => m._id === match.params.movieId)
               if (!movie) return 
             return <Col md={8}>
@@ -121,9 +126,9 @@ render() {
                   <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre} onBackClick={() => history.goBack()} />
               </Col>
           }}/>
+ 
 
-
-         <Route path="/directors/:name" render={({ match, history }) => {
+         {/* <Route exact path="/directors/:name" render={({ match, history }) => { */}
         
            
 

@@ -11,7 +11,7 @@ export function RegistrationView(props) {
 const [username, setUsername ] = useState('');
 const [password, setPassword ] = useState('');
 const [email, setEmail ] = useState('');
-const [birthday, setBirthday] = useState('');
+
 
 // Hooks
 
@@ -85,7 +85,7 @@ return (
                     <h3> Sign Up</h3>
                     <p></p>  
                     <Form.Group controlId='formUsername' className='reg-form-inputs'>
-                    <Form.label>Username:</Form.label>
+                    <Form.Label>Username:</Form.Label>
                         <Form.Control type='text' placeholder='Enter Username' value={username} onChange={e => setUsername(e.target.value)} />
                         {values.usernameErr && <p>{values.usernameErr}</p>}
                     </Form.Group>
@@ -98,7 +98,7 @@ return (
 
                 
                     <Form.Group controlId='formEmail' className='reg-form-inputs'>
-                        <Form.label>Email:</Form.label>
+                        <Form.Label>Email:</Form.Label>
                         <Form.Control type='text' placeholder='user@example.com' value={email} onChange={e => setPassword(e.target.value)} />]
                         {values.emailErr ** <p>{values.passwordErr}</p>}
                         <Button variant='primary' type='submit' onClick={handleSubmit}>

@@ -78,7 +78,7 @@ return (
         </Button>
         <Router>
       
-       <Link to={`/register`}>
+       <Link to={'/register'}>
            <Button variant='link'>Register</Button>
        </Link>
        </Router>
