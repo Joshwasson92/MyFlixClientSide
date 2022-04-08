@@ -1,34 +1,36 @@
-import React from 'react';
+import React from "react";
 
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 
 export class DirectorView extends React.Component {
-    
+  render() {
+    const { director, onBackClick } = this.props;
 
-    render() {
-        const { director, onBackClick} = this.props;
-        
-        return (
-            <div className='director-view'>
-                <div className='director-name'>
-                    <span className='label'>Name: </span>
-                    <span className='value'>{director.Name}</span>
-                </div>
+    return (
+      <div className="director-view">
+        <div className="director-name">
+          <span className="label">Name: </span>
+          <span className="value">{director.Name}</span>
+        </div>
 
-                <div className='director-dob'>
-                    <span className='label'>Birthday: </span>
-                    <span className='value'>{director.Birthday}</span>
-                </div>
+        <div className="director-dob">
+          <span className="label">Birthday: </span>
+          <span className="value">{director.Birthday}</span>
+        </div>
 
-                <div className='director-bio'>
-                    <span className='label'>Bio: </span>
-                    <span className='value'>{director.Bio}</span>
-                </div>
-                <Button onClick={() => { onBackClick(null); }}>Back</Button>
-            </div>
-        )
-    }
-
+        <div className="director-bio">
+          <span className="label">Bio: </span>
+          <span className="value">{director.Bio}</span>
+        </div>
+        <Button
+          onClick={() => {
+            onBackClick(null);
+          }}
+        >
+          Back
+        </Button>
+      </div>
+    );
+  }
 }

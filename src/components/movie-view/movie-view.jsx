@@ -1,12 +1,9 @@
-import React from 'react';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import React from "react";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 
-
 export class MovieView extends React.Component {
-
-
   render() {
     const { movie, onBackClick } = this.props;
     return (
@@ -22,23 +19,26 @@ export class MovieView extends React.Component {
           <span className="label">Description: </span>
           <span className="value">{movie.Description}</span>
         </div>
-        
-     <div>
-         <Link to={`/directors/${movie.Director.Name}`}>
-             <Button variant='link'>Director</Button>
-         </Link>
-     </div>
-     <div>
-         <Link to={`/genres/${movie.Genre.Name}`}>
-             <Button variant='link'>{movie.Genre.Name}</Button>
-         </Link>
-     </div>
-        
 
-  
-        <Button onClick={() => { onBackClick(null); }}>Back</Button>
+        <div>
+          <Link to={`/directors/${movie.Director.Name}`}>
+            <Button variant="link">Director</Button>
+          </Link>
+        </div>
+        <div>
+          <Link to={`/genres/${movie.Genre.Name}`}>
+            <Button variant="link">{movie.Genre.Name}</Button>
+          </Link>
+        </div>
 
-       </div>
+        <Button
+          onClick={() => {
+            onBackClick(null);
+          }}
+        >
+          Back
+        </Button>
+      </div>
     );
   }
 }
