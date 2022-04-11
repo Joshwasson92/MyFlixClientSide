@@ -85,7 +85,7 @@ export function LoginView(props) {
       </Button>
       <Router>
         <Link to={"/register"}>
-          <Button>Register</Button>
+          <Button onClick={() => {}}>Register</Button>
         </Link>
       </Router>
     </Form>
