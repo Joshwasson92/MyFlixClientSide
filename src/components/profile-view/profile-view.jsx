@@ -45,10 +45,10 @@ export class ProfileView extends React.Component {
       })
       .then((response) => {
         this.setState({
-          Username: response.data.Username,
-          Password: response.data.Password,
-          Email: response.data.Email,
-          Birthday: response.data.Birthday,
+          user: response.data.Username,
+          password: response.data.Password,
+          email: response.data.Email,
+          birthday: response.data.Birthday,
         });
       })
       .catch(function (error) {
@@ -62,7 +62,7 @@ export class ProfileView extends React.Component {
     const token = localStorage.getItem("token");
 
     axios
-      .put("https://jwmovieapi.herokuapp.com/users/:Username", {
+      .put(`https://jwmovieapi.herokuapp.com/users/${Username}`, {
         headers: { Authorization: `Bearer ${token}` },
         Username: this.state.username,
         Password: this.state.password,

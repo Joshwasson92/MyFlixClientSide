@@ -124,7 +124,6 @@ export default class MainView extends React.Component {
           <Route
             path="/users/:userId"
             render={({ match, history }) => {
-              console.log(`${user.email}`);
               if (!user) {
                 return (
                   <Col>
