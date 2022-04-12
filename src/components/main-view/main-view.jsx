@@ -122,6 +122,30 @@ export default class MainView extends React.Component {
           />
 
           <Route
+            path="/users/:userId"
+            render={({ match, history }) => {
+              console.log(`${user.email}`);
+              if (!user) {
+                return (
+                  <Col>
+                    <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+                  </Col>
+                );
+              } else {
+                return (
+                  <Col>
+                    <ProfileView
+                      user={this.state.user}
+                      email={user.email}
+                      onBackClick={() => history.goBack()}
+                    />
+                  </Col>
+                );
+              }
+            }}
+          />
+
+          <Route
             path="/directors/:name"
             render={({ match, history }) => {
               if (!user)

@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import { Menu } from "../navbar/navbar";
 import { RegistrationView } from "../registration-view/registration-view";
 import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
+function RegisterUser(props) {
+  return <RegistrationView></RegistrationView>;
+}
 export function LoginView(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -83,11 +86,10 @@ export function LoginView(props) {
       <Button variant="primary" type="submit" onClick={handleSubmit}>
         Submit
       </Button>
-      <Router>
-        <Link to={"/register"}>
-          <Button onClick={() => {}}>Register</Button>
-        </Link>
-      </Router>
+
+      <Link to={"/register"}>
+        <Button>Register</Button>
+      </Link>
     </Form>
   );
 }
