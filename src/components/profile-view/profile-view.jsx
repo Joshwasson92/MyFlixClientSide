@@ -44,7 +44,6 @@ export class ProfileView extends React.Component {
           Username: response.data.Username,
           Password: response.data.Password,
           Email: response.data.Email,
-          FavoriteMovies: response.data.FavoriteMovies,
           Birthday: response.data.Birthday,
         });
       })
@@ -121,7 +120,7 @@ export class ProfileView extends React.Component {
                 type="text"
                 placeholder="Username"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => this.setUsername(e.target.value)}
               />
               {/* {values.usernameErr && <p>{values.usernameErr}</p>} */}
             </Form.Group>
@@ -132,7 +131,7 @@ export class ProfileView extends React.Component {
                 type="password"
                 placeholder="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => this.setPassword(e.target.value)}
               />
               {/* {values.passwordErr && <p>{values.passwordErr}</p>} */}
             </Form.Group>
@@ -143,7 +142,7 @@ export class ProfileView extends React.Component {
                 type="email"
                 placeholder="user@example.com"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => this.setEmail(e.target.value)}
               />
 
               <Form.Group controlid="formBirthday" className="reg-form-inputs">
@@ -152,6 +151,8 @@ export class ProfileView extends React.Component {
                   type="date"
                   name="birthday"
                   placeholder="Birthday"
+                  value={birthday}
+                  onChange={(e) => this.setBirthday(e.target.value)}
                 />
               </Form.Group>
               {/* {values.emailErr && <p>{values.emailErr}</p>} */}
