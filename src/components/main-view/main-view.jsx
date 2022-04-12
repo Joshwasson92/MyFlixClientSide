@@ -30,7 +30,7 @@ export default class MainView extends React.Component {
   }
 
   componentDidMount() {
-    let accessToken = localStorage.getItem("token");
+    const accessToken = localStorage.getItem("token");
     if (accessToken !== null) {
       this.setState({
         user: localStorage.getItem("user"),

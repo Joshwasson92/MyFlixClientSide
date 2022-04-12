@@ -21,6 +21,7 @@ export class ProfileView extends React.Component {
 
   componentDidMount() {
     const accessToken = localStorage.getItem("token");
+
     this.getUser(accessToken);
   }
 
@@ -34,7 +35,10 @@ export class ProfileView extends React.Component {
   }
 
   getUser = (token) => {
-    const user = localStorage.getItem("user");
+    const user = localStorage.getItem("token");
+    this.setState({
+      user: localStorage.getItem("user"),
+    });
     axios
       .get(`https://jwmovieapi.herokuapp.com/usersfind/${user}`, {
         headers: { Authorization: `Bearer ${token}` },
