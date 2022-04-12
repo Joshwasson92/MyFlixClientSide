@@ -59,7 +59,7 @@ export class ProfileView extends React.Component {
 
     axios
       .put("https://jwmovieapi.herokuapp.com/users/:Username", {
-        headers: { Authorization: "Bearer ${token}" },
+        headers: { Authorization: `Bearer ${token}` },
         Username: this.state.username,
         Password: this.state.password,
         Email: this.state.email,
@@ -166,3 +166,13 @@ export class ProfileView extends React.Component {
     );
   }
 }
+
+ProfileView.propTypes = {
+  updateUser: PropTypes.shape({
+    Username: PropTypes.string.isRequired,
+    Password: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
+    Birthday: PropTypes.string.isRequired,
+  }),
+  onupdateUser: PropTypes.func,
+};
