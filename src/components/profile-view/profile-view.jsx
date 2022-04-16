@@ -12,10 +12,10 @@ export class ProfileView extends React.Component {
     super();
 
     this.state = {
-      username: "",
-      password: "",
-      email: "",
-      birthday: "",
+      Username: "",
+      Password: "",
+      Email: "",
+      Birthday: "",
     };
   }
 
@@ -26,6 +26,14 @@ export class ProfileView extends React.Component {
   }
 
   onLoggedIn(authData) {
+    window.addEventListener("storage", (event) => {
+      // event contains
+      // key – the key that was changed
+      // oldValue – the old value
+      // newValue – the new value
+      // url –
+      // storageArea – either localStorage or sessionStorage object where the update happened.
+    });
     console.log(authData);
     this.setState({
       user: authData.user.Username,
@@ -34,18 +42,16 @@ export class ProfileView extends React.Component {
     this.getMovies(authData.token);
   }
 
-  getUser = (token) => {
-    const user = localStorage.getItem("token");
-    this.setState({
-      user: localStorage.getItem("user"),
-    });
+  getUser = () => {
+    const user = this.props.user;
+    const token = localStorage.getItem("token");
     axios
       .get(`https://jwmovieapi.herokuapp.com/usersfind/${user}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
         this.setState({
-          user: response.data.Username,
+          username: response.data.Username,
           password: response.data.Password,
           email: response.data.Email,
           birthday: response.data.Birthday,
@@ -56,19 +62,22 @@ export class ProfileView extends React.Component {
       });
   };
 
-  updateUser = function (e) {
+  updateUser = (e) => {
     e.preventDefault();
-    const Username = localstore.getItem("user");
+    const user = this.props.user;
     const token = localStorage.getItem("token");
 
     axios
-      .put(`https://jwmovieapi.herokuapp.com/users/${Username}`, {
-        headers: { Authorization: `Bearer ${token}` },
-        Username: this.state.username,
-        Password: this.state.password,
-        Email: this.state.email,
-        Birthday: this.state.birthday,
-      })
+      .put(
+        `https://jwmovieapi.herokuapp.com/users/${user}`,
+        {
+          Username: this.state.Username,
+          Password: this.state.Password,
+          Email: this.state.Email,
+          Birthday: this.state.Birthday,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
       .then((response) => {
         this.setState({
           Username: response.data.Username,
@@ -78,6 +87,7 @@ export class ProfileView extends React.Component {
         });
         localStorage.setItem("user", this.state.Username);
         alert("Profile Successfully updated.");
+        console.log(`${Password}`);
       })
       .catch(function (error) {
         console.log(error);
@@ -111,7 +121,7 @@ export class ProfileView extends React.Component {
 
   render() {
     const { username, email, birthday, password, onBackClick } = this.state;
-    console.log(`${username}`);
+
     return (
       <Row className="mt-5">
         <Col md={12}>
@@ -123,7 +133,7 @@ export class ProfileView extends React.Component {
               <Form.Control
                 type="text"
                 placeholder="Username"
-                value={username}
+                value={this.state.Username}
                 onChange={(e) => this.setUsername(e.target.value)}
               />
               {/* {values.usernameErr && <p>{values.usernameErr}</p>} */}
@@ -134,7 +144,7 @@ export class ProfileView extends React.Component {
               <Form.Control
                 type="password"
                 placeholder="password"
-                value={password}
+                value={this.state.Password}
                 onChange={(e) => this.setPassword(e.target.value)}
               />
               {/* {values.passwordErr && <p>{values.passwordErr}</p>} */}
@@ -145,7 +155,7 @@ export class ProfileView extends React.Component {
               <Form.Control
                 type="email"
                 placeholder="user@example.com"
-                value={email}
+                value={this.state.Email}
                 onChange={(e) => this.setEmail(e.target.value)}
               />
 
@@ -155,7 +165,7 @@ export class ProfileView extends React.Component {
                   type="date"
                   name="birthday"
                   placeholder="Birthday"
-                  value={birthday}
+                  //   value={birthday}
                   onChange={(e) => this.setBirthday(e.target.value)}
                 />
               </Form.Group>
@@ -163,6 +173,9 @@ export class ProfileView extends React.Component {
               <Button variant="primary" type="submit" onClick={this.updateUser}>
                 Update
               </Button>
+              <Link to={"/"}>
+                <Button>Back</Button>
+              </Link>
             </Form.Group>
           </Form>
         </Col>
