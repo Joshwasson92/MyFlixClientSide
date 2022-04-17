@@ -9,6 +9,10 @@ import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
 function RegisterUser(props) {
   return <RegistrationView></RegistrationView>;
 }
+
+function MovieView(props) {
+  return <MovieView></MovieView>;
+}
 export function LoginView(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

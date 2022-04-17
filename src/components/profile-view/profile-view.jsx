@@ -4,7 +4,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 // import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
-import { Row, Col, Button, Container, Form } from "react-bootstrap";
+import { Row, Col, Button, Container, Form, Card } from "react-bootstrap";
 import { LoginView } from "../login-view/login-view";
 
 export class ProfileView extends React.Component {
@@ -16,6 +16,7 @@ export class ProfileView extends React.Component {
       Password: "",
       Email: "",
       Birthday: "",
+      FavoriteMovies: [],
     };
   }
 
@@ -55,6 +56,7 @@ export class ProfileView extends React.Component {
           password: response.data.Password,
           email: response.data.Email,
           birthday: response.data.Birthday,
+          FavoriteMovies: response.data.FavoriteMovies,
         });
       })
       .catch(function (error) {
@@ -87,7 +89,6 @@ export class ProfileView extends React.Component {
         });
         localStorage.setItem("user", this.state.Username);
         alert("Profile Successfully updated.");
-        console.log(`${Password}`);
       })
       .catch(function (error) {
         console.log(error);
@@ -119,8 +120,44 @@ export class ProfileView extends React.Component {
     });
   }
 
+  deleteAccount() {
+    const user = this.props.user;
+    const token = localStorage.getItem("token");
+
+    axios
+      .delete(" https://jwmovieapi.herokuapp.com/usersdelete/${user}", {
+        headers: { Authorization: `bearer ${token}` },
+      })
+      .then((response) => {
+        console.log(response);
+        localStorage.removeItem("user");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  removeFavMovie = (e, movies) => {
+    e.preventDefault();
+    const user = this.props.user;
+    const token = localStorage.getItem("token");
+
+    axios.delete(
+      "https://jwmovieapi.herokuapp.com/users/${user}/movies/${movie._id}",
+      { headers: { Authorization: `bearer ${token}` } }
+        .then((response) => {
+          console.log(response);
+          this.componentDidMount();
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+    );
+  };
+
   render() {
-    const { username, email, birthday, password, onBackClick } = this.state;
+    const { Username, Email, Birthday, Password, onBackClick } = this.state;
+    const { FavoriteMovies } = this.props;
 
     return (
       <Row className="mt-5">
@@ -176,11 +213,55 @@ export class ProfileView extends React.Component {
               <Link to={"/"}>
                 <Button>Back</Button>
               </Link>
+              <Button onClick={() => this.deleteAccount()}>
+                Deactivate Account
+              </Button>
             </Form.Group>
           </Form>
         </Col>
       </Row>
     );
+    <Row>
+      <Col>
+        <Card>
+          <Card.Body>
+            {FavoriteMovies.length === 0 && (
+              <div className="text-center">You have no favorite movies.</div>
+            )}
+            <Row className="favMovies-container">
+              {FavoriteMovies.length > 0 &&
+                movies.map((movie) => {
+                  if (
+                    movie._id ===
+                    FavoriteMovies.find((favorite) => favorite === movie._id)
+                  ) {
+                    return (
+                      <Card className="favorite-movie" key={movie._id}>
+                        <Card.Img
+                          className="favorite-movie-image"
+                          variant="top"
+                          src={movie.ImagePath}
+                        />
+                        <Card.Body>
+                          <Card.Title className="movie-title">
+                            {movie.Title}
+                          </Card.Title>
+                          <Button
+                            value={movie._id}
+                            onClick={(e) => this.removeFavMovie(e, movie)}
+                          >
+                            Remove Movie
+                          </Button>
+                        </Card.Body>
+                      </Card>
+                    );
+                  }
+                })}
+            </Row>
+          </Card.Body>
+        </Card>
+      </Col>
+    </Row>;
   }
 }
 
