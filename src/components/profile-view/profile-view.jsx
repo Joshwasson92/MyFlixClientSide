@@ -8,8 +8,8 @@ import { MovieUser } from "../login-view/login-view";
 import { LoginView } from "../login-view/login-view";
 
 export class ProfileView extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       Username: "",
@@ -19,26 +19,26 @@ export class ProfileView extends React.Component {
       FavoriteMovies: [],
     };
   }
-
   componentDidMount() {
-    const token = localStorage.getItem("token");
-    this.getUser(token);
+    this.getUser(this.props.user);
   }
 
   getUser(token) {
-    let user = localStorage.getItem("user");
+    const user = this.props.user.Username;
+
     axios
       .get(`https://jwmovieapi.herokuapp.com/usersfind/${user}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
         this.setState({
-          username: response.data.Username,
-          password: response.data.Password,
-          email: response.data.Email,
-          birthday: response.data.Birthday,
+          Username: response.data.Username,
+          Password: response.data.Password,
+          Email: response.data.Email,
+          Birthday: response.data.Birthday,
           FavoriteMovies: response.data.FavoriteMovies,
         });
+        console.log(response);
       })
       .catch(function (error) {
         console.log(error);
