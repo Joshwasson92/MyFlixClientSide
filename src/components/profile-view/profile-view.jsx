@@ -20,11 +20,11 @@ export class ProfileView extends React.Component {
     };
   }
   componentDidMount() {
-    this.getUser(this.props.user);
+    this.getUser();
   }
 
   getUser(token) {
-    const user = this.props.user.Username;
+    const user = this.props.username;
 
     axios
       .get(`https://jwmovieapi.herokuapp.com/usersfind/${user}`, {
@@ -38,6 +38,7 @@ export class ProfileView extends React.Component {
           Birthday: response.data.Birthday,
           FavoriteMovies: response.data.FavoriteMovies,
         });
+        localStorage.setItem("user", this.state.Username);
         console.log(response);
       })
       .catch(function (error) {
