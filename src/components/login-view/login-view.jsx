@@ -10,9 +10,10 @@ function RegisterUser(props) {
   return <RegistrationView></RegistrationView>;
 }
 
-function MovieView(props) {
+export function MovieUser(props) {
   return <MovieView></MovieView>;
 }
+
 export function LoginView(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

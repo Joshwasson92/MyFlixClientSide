@@ -3,19 +3,13 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { LoginView } from "../login-view/login-view";
+import { MovieUser } from "../login-view/login-view";
 
 export class MovieView extends React.Component {
   constructor() {
     super();
 
-    this.state = { FavoriteMovies: [] };
-  }
-
-  componentDidMount() {
-    const accessToken = localStorage.getItem("token");
-
-    this.getMovieList(accessToken);
+    this.state = { user: null, FavoriteMovies: [] };
   }
 
   onLoggedIn(authData) {
@@ -35,14 +29,44 @@ export class MovieView extends React.Component {
     this.getMovies(authData.token);
   }
 
+  removeMovieList = (e, movies) => {
+    const user = this.props.username;
+    const token = localStorage.getItem("token");
+    const movie = this.props.movie._id;
+
+    <MovieUser />;
+
+    axios
+      .delete(
+        `https://jwmovieapi.herokuapp.com/users/${user}/movies/${movie}`,
+        { FavoriteMovies: this.state.FavoriteMovies },
+
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((response) => {
+        this.setState({
+          FavoriteMovies: response.data.FavoriteMovies,
+        });
+        localStorage.setItem("user", this.state.Username);
+        alert("Movie Removed from list");
+      })
+      .catch(function (error) {
+        console.log(error);
+        alert("An error occured");
+      });
+  };
+
   addMovieList = (e, movies) => {
     // e.preventDefault();
-    const user = this.props.user.Username;
+
+    <MovieUser />;
+    const user = this.props.username;
+
     const token = localStorage.getItem("token");
     const movie = this.props.movie._id;
 
     axios
-      .put(
+      .post(
         `https://jwmovieapi.herokuapp.com/users/${user}/movies/${movie}`,
         { FavoriteMovies: this.state.FavoriteMovies },
 
@@ -101,6 +125,14 @@ export class MovieView extends React.Component {
           }}
         >
           Add to list
+        </Button>
+
+        <Button
+          onClick={() => {
+            this.removeMovieList();
+          }}
+        >
+          Remove from list
         </Button>
       </div>
     );

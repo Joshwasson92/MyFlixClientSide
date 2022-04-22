@@ -16,7 +16,6 @@ import { RegistrationView } from "../registration-view/registration-view";
 import { DirectorView } from "../director-view/director-view";
 import { GenreView } from "../genre-view/genre-view";
 import { ProfileView } from "../profile-view/profile-view";
-// import {UserUpdate} from '../profile-view/user-update';
 import "./main-view.scss";
 
 export default class MainView extends React.Component {
@@ -45,6 +44,7 @@ export default class MainView extends React.Component {
       user: authData.user.Username,
     });
     localStorage.setItem("token", authData.token);
+    localStorage.setItem("user", authData.user.username);
     this.getMovies(authData.token);
   }
 
@@ -113,6 +113,7 @@ export default class MainView extends React.Component {
               return (
                 <Col md={8}>
                   <MovieView
+                    username={user}
                     movie={movies.find((m) => m._id === match.params.movieId)}
                     onBackClick={() => history.goBack()}
                   />
@@ -122,7 +123,7 @@ export default class MainView extends React.Component {
           />
 
           <Route
-            path="/users/:userId"
+            path="/usersfind/:userId"
             render={({ match, history }) => {
               if (!user) {
                 return (
@@ -136,6 +137,7 @@ export default class MainView extends React.Component {
                     <ProfileView
                       user={this.state.user}
                       email={user.email}
+                      movies={user.FavoriteMovies}
                       onBackClick={() => history.goBack()}
                     />
                   </Col>

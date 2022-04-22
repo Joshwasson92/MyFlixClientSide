@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
+
 export function Menu({ user }) {
   const onLoggedOut = () => {
     localStorage.clear();
@@ -33,7 +34,8 @@ export function Menu({ user }) {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <nav className="ml-auto">
-            {isAuth() && <Link to={`/users/${user}`}>{user}</Link>}
+            {isAuth() && <Link to={`/usersfind/${user}`}>{user}</Link>}
+
             {isAuth() && (
               <Button variant="link" onClick={() => onLoggedOut()}>
                 Logout
