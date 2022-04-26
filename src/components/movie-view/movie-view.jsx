@@ -9,7 +9,7 @@ export class MovieView extends React.Component {
   constructor() {
     super();
 
-    this.state = { user: null, FavoriteMovies: [] };
+    this.state = { user: "", FavoriteMovies: [] };
   }
 
   onLoggedIn(authData) {

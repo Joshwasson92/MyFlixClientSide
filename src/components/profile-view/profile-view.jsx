@@ -23,9 +23,9 @@ export class ProfileView extends React.Component {
     this.getUser();
   }
 
-  getUser(token) {
-    const user = this.props.username;
-
+  getUser() {
+    const user = this.props.user;
+    const token = localStorage.getItem("token");
     axios
       .get(`https://jwmovieapi.herokuapp.com/usersfind/${user}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -153,141 +153,130 @@ export class ProfileView extends React.Component {
   };
 
   render() {
-    const { movies, onBackClick } = this.props.user;
-    const { FavoriteMovies, user } = this.state;
+    const { movies, FavoriteMovies, onBackClick } = this.props.user;
+    const { user } = this.state;
 
-    if (!user) {
-      return <LoginView />;
-    } else {
-      return (
-        <Row className="mt-5">
-          <Col md={12}>
-            <Card>
-              <Card.Body>
-                {FavoriteMovies.length === 0 && (
-                  <div className="text-center">
-                    You have no favorite movies.
-                  </div>
-                )}
-                <Row className="favMovies-container">
-                  {FavoriteMovies.length > 0 &&
-                    movies.map((movie) => {
-                      if (
-                        movie._id ===
-                        FavoriteMovies.find((fav) => fav === movie._id)
-                      ) {
-                        return (
-                          <Card className="favorite-movie" key={movie._id}>
-                            <Card.Img
-                              className="favorite-movie-image"
-                              variant="top"
-                              src={movie.ImagePath}
-                            />
-                            <Card.Body>
-                              <Card.Title className="movie-title">
-                                {movie.Title}
-                              </Card.Title>
-                              <Button
-                                value={movie._id}
-                                onClick={(e) => {
-                                  this.removeFavMovie;
-                                }}
-                              >
-                                Remove Movie
-                              </Button>
-                              <Button
-                                onClick={() => {
-                                  onBackClick(null);
-                                }}
-                              >
-                                Back
-                              </Button>
-                            </Card.Body>
-                          </Card>
-                        );
-                      }
-                    })}
-                </Row>
-              </Card.Body>
-            </Card>
+    // if (!user) {
+    //   return <LoginView />;
+    // } else {
+    return (
+      <Row className="mt-5">
+        <Col md={12}>
+          <Card>
+            <Card.Body>
+              {this.FavoriteMovies.length === 0 && (
+                <div className="text-center">You have no favorite movies.</div>
+              )}
+              <Row className="favMovies-container">
+                {FavoriteMovies.length > 0 &&
+                  movies.map((movie) => {
+                    if (movie._id === movie.find((fav) => fav === movie._id)) {
+                      return (
+                        <Card className="favorite-movie" key={movie._id}>
+                          <Card.Img
+                            className="favorite-movie-image"
+                            variant="top"
+                            src={movie.ImagePath}
+                          />
+                          <Card.Body>
+                            <Card.Title className="movie-title">
+                              {movie.Title}
+                            </Card.Title>
+                            <Button
+                              value={movie._id}
+                              onClick={(e) => {
+                                this.removeFavMovie;
+                              }}
+                            >
+                              Remove Movie
+                            </Button>
+                            <Button
+                              onClick={() => {
+                                onBackClick(null);
+                              }}
+                            >
+                              Back
+                            </Button>
+                          </Card.Body>
+                        </Card>
+                      );
+                    }
+                  })}
+              </Row>
+            </Card.Body>
+          </Card>
 
-            <Card>
-              <Form>
-                <h3>Profile</h3>
-                <p></p>
+          <Card>
+            <Form>
+              <h3>Profile</h3>
+              <p></p>
+              <Form.Group controlid="formUsername" className="reg-form-inputs">
+                <Form.Label>Username:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Username"
+                  value={this.state.Username}
+                  onChange={(e) => this.setUsername(e.target.value)}
+                />
+                {/* {values.usernameErr && <p>{values.usernameErr}</p>} */}
+              </Form.Group>
+
+              <Form.Group controlid="formPassword" className="reg-form-inputs">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="password"
+                  value={this.state.Password}
+                  onChange={(e) => this.setPassword(e.target.value)}
+                />
+                {/* {values.passwordErr && <p>{values.passwordErr}</p>} */}
+              </Form.Group>
+
+              <Form.Group controlid="formEmail" className="reg-form-inputs">
+                <Form.Label>Email:</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="user@example.com"
+                  value={this.state.Email}
+                  onChange={(e) => this.setEmail(e.target.value)}
+                />
+
                 <Form.Group
-                  controlid="formUsername"
+                  controlid="formBirthday"
                   className="reg-form-inputs"
                 >
-                  <Form.Label>Username:</Form.Label>
+                  <Form.Label>Birthday:</Form.Label>
                   <Form.Control
-                    type="text"
-                    placeholder="Username"
-                    value={this.state.Username}
-                    onChange={(e) => this.setUsername(e.target.value)}
+                    type="date"
+                    name="birthday"
+                    placeholder="Birthday"
+                    //   value={birthday}
+                    onChange={(e) => this.setBirthday(e.target.value)}
                   />
-                  {/* {values.usernameErr && <p>{values.usernameErr}</p>} */}
                 </Form.Group>
-
-                <Form.Group
-                  controlid="formPassword"
-                  className="reg-form-inputs"
+                {/* {values.emailErr && <p>{values.emailErr}</p>} */}
+                <Button
+                  variant="primary"
+                  type="submit"
+                  onClick={this.updateUser}
                 >
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="password"
-                    value={this.state.Password}
-                    onChange={(e) => this.setPassword(e.target.value)}
-                  />
-                  {/* {values.passwordErr && <p>{values.passwordErr}</p>} */}
-                </Form.Group>
-
-                <Form.Group controlid="formEmail" className="reg-form-inputs">
-                  <Form.Label>Email:</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="user@example.com"
-                    value={this.state.Email}
-                    onChange={(e) => this.setEmail(e.target.value)}
-                  />
-
-                  <Form.Group
-                    controlid="formBirthday"
-                    className="reg-form-inputs"
-                  >
-                    <Form.Label>Birthday:</Form.Label>
-                    <Form.Control
-                      type="date"
-                      name="birthday"
-                      placeholder="Birthday"
-                      //   value={birthday}
-                      onChange={(e) => this.setBirthday(e.target.value)}
-                    />
-                  </Form.Group>
-                  {/* {values.emailErr && <p>{values.emailErr}</p>} */}
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    onClick={this.updateUser}
-                  >
-                    Update
-                  </Button>
-                  <Link to={"/"}>
-                    <Button>Back</Button>
-                  </Link>
-                  <Button onClick={() => this.deleteAccount()}>
-                    Deactivate Account
-                  </Button>
-                </Form.Group>
-              </Form>
-            </Card>
-          </Col>
-        </Row>
-      );
-    }
+                  Update
+                </Button>
+                <Link to={"/"}>
+                  <Button>Back</Button>
+                </Link>
+                <Button onClick={() => this.deleteAccount()}>
+                  Deactivate Account
+                </Button>
+              </Form.Group>
+            </Form>
+          </Card>
+        </Col>
+      </Row>
+    );
   }
 }
+// }
 
 // ProfileView.propTypes = {
 //   updateUser: PropTypes.shape({
