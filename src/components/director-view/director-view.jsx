@@ -2,6 +2,7 @@ import React from "react";
 
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import "./director-view.scss";
 
 export class DirectorView extends React.Component {
   render() {

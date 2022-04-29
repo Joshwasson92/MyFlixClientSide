@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { Menu } from "../navbar/navbar";
 import { RegistrationView } from "../registration-view/registration-view";
 import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
+import "./login-view.scss";
+
 function RegisterUser(props) {
   return <RegistrationView></RegistrationView>;
 }

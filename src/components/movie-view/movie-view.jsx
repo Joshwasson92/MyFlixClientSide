@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { MovieUser } from "../login-view/login-view";
+import "./movie-view.scss";
 
 export class MovieView extends React.Component {
   constructor() {
@@ -33,8 +34,6 @@ export class MovieView extends React.Component {
     const user = this.props.username;
     const token = localStorage.getItem("token");
     const movie = this.props.movie._id;
-
-    <MovieUser />;
 
     axios
       .delete(
@@ -89,9 +88,12 @@ export class MovieView extends React.Component {
     const { movie, onBackClick } = this.props;
     return (
       <div className="movie-view">
-        <div className="movie-poster">
-          <img crossOrigin="anonymous" src={movie.ImagePath} />
-        </div>
+        <img
+          className="movie-poster"
+          crossOrigin="anonymous"
+          src={movie.ImagePath}
+        />
+
         <div className="movie-title">
           <span className="label">Title: </span>
           <span className="value">{movie.Title}</span>
@@ -125,14 +127,6 @@ export class MovieView extends React.Component {
           }}
         >
           Add to list
-        </Button>
-
-        <Button
-          onClick={() => {
-            this.removeMovieList();
-          }}
-        >
-          Remove from list
         </Button>
       </div>
     );

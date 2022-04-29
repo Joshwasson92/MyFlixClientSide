@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Row, Col, Button, Container, Form, Card } from "react-bootstrap";
 import { MovieUser } from "../login-view/login-view";
 import { LoginView } from "../login-view/login-view";
+import "./profile-view.scss";
 
 export class ProfileView extends React.Component {
   constructor(props) {
@@ -26,6 +27,7 @@ export class ProfileView extends React.Component {
   getUser() {
     const user = this.props.user;
     const token = localStorage.getItem("token");
+
     axios
       .get(`https://jwmovieapi.herokuapp.com/usersfind/${user}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -36,13 +38,46 @@ export class ProfileView extends React.Component {
           Password: response.data.Password,
           Email: response.data.Email,
           Birthday: response.data.Birthday,
-          FavoriteMovies: response.data.FavoriteMovies,
         });
         localStorage.setItem("user", this.state.Username);
+        this.findFavMovies(response.data.FavoriteMovies);
         console.log(response);
       })
       .catch(function (error) {
         console.log(error);
+      });
+  }
+
+  findFavMovies(favMovies) {
+    const token = localStorage.getItem("token");
+
+    axios
+      .get("https://jwmovieapi.herokuapp.com/movies", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        this.setState({
+          FavoriteMovies: response.data.filter((movie) =>
+            favMovies.includes(movie._id)
+          ),
+        });
+      })
+
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  getFavMovies() {
+    const user = this.props.user;
+    const token = localStorage.getItem("token");
+
+    axios
+      .get(`https://jwmovieapi.herokuapp.com/${user}/movies`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        this.findFavMovies(response.data.FavoriteMovies);
       });
   }
 
@@ -134,26 +169,29 @@ export class ProfileView extends React.Component {
       });
   }
 
-  removeFavMovie = (e, movie) => {
-    e.preventDefault();
-    const user = localStorage.getItem("user");
+  removeFavMovie = (_id) => {
+    const user = this.props.user;
     const token = localStorage.getItem("token");
-    axios.delete(
-      `https://jwmovieapi.herokuapp.com//users/${user}/movies/${movie._id}`,
-      { headers: { Authorization: `bearer ${token}` } }
-        .then((response) => {
-          console.log(response);
-          alert("Movie removed from list");
-          this.componentDidMount();
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
-    );
+
+    axios
+      .delete(
+        `https://jwmovieapi.herokuapp.com/users/${user}/movies/${_id}`,
+
+        { headers: { Authorization: `bearer ${token}` } }
+      )
+      .then((response) => {
+        console.log(response);
+        alert("Movie removed from list");
+        window.location.reload();
+      })
+
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   render() {
-    const { movies, FavoriteMovies, onBackClick } = this.props.user;
+    const { movie, FavoriteMovies, onBackClick } = this.props;
     const { user } = this.state;
 
     // if (!user) {
@@ -164,44 +202,30 @@ export class ProfileView extends React.Component {
         <Col md={12}>
           <Card>
             <Card.Body>
-              {this.FavoriteMovies.length === 0 && (
+              {this.getFavMovies()}
+              {this.state.FavoriteMovies.length === 0 && (
                 <div className="text-center">You have no favorite movies.</div>
               )}
               <Row className="favMovies-container">
-                {FavoriteMovies.length > 0 &&
-                  movies.map((movie) => {
-                    if (movie._id === movie.find((fav) => fav === movie._id)) {
-                      return (
-                        <Card className="favorite-movie" key={movie._id}>
-                          <Card.Img
-                            className="favorite-movie-image"
-                            variant="top"
-                            src={movie.ImagePath}
-                          />
-                          <Card.Body>
-                            <Card.Title className="movie-title">
-                              {movie.Title}
-                            </Card.Title>
-                            <Button
-                              value={movie._id}
-                              onClick={(e) => {
-                                this.removeFavMovie;
-                              }}
-                            >
-                              Remove Movie
-                            </Button>
-                            <Button
-                              onClick={() => {
-                                onBackClick(null);
-                              }}
-                            >
-                              Back
-                            </Button>
-                          </Card.Body>
-                        </Card>
-                      );
-                    }
-                  })}
+                {this.state.FavoriteMovies.map((favMovie) => (
+                  <Card>
+                    <Card.Body>
+                      <div className="movie-title">{favMovie.Title}</div>
+                      <img
+                        crossOrigin="anonymous"
+                        src={favMovie.ImagePath}
+                        className="movie-img"
+                      />
+                      <Button
+                        onClick={() => {
+                          this.removeFavMovie(favMovie._id);
+                        }}
+                      >
+                        Remove Movie
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                ))}
               </Row>
             </Card.Body>
           </Card>

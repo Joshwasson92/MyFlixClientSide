@@ -29,7 +29,7 @@ export function Menu({ user }) {
     >
       <Container>
         <Navbar.Brand className="navbar-logo" href="/">
-          myFlixCinema
+          Fishbowl Flix!
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
