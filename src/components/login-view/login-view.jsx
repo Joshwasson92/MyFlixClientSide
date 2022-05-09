@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
+import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
+
 import { Link } from "react-router-dom";
 import { Menu } from "../navbar/navbar";
 import { RegistrationView } from "../registration-view/registration-view";
-import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
 import "./login-view.scss";
 
 function RegisterUser(props) {

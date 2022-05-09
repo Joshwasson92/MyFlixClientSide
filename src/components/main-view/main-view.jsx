@@ -4,6 +4,7 @@ import {
   Route,
   Redirect,
   useHistory,
+  Routes,
 } from "react-router-dom";
 import axios from "axios";
 import { Container, Row, Col } from "react-bootstrap";
@@ -69,7 +70,7 @@ export default class MainView extends React.Component {
   render() {
     const { movies, user } = this.state;
     return (
-      <Router>
+      <Routes>
         <Menu user={user} />
         <Row className="main-view justify-content-md-center">
           <Route
@@ -197,7 +198,7 @@ export default class MainView extends React.Component {
             }}
           />
         </Row>
-      </Router>
+      </Routes>
     );
   }
 }

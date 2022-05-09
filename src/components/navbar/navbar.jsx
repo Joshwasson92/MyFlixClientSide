@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
 
 export function Menu({ user }) {
