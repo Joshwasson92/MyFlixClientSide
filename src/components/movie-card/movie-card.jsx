@@ -12,7 +12,7 @@ export class MovieCard extends React.Component {
     const { movie } = this.props;
 
     return (
-      <Card style={{ width: "18rem" }}>
+      <Card className="ml-2 me-2" style={{ width: "18rem" }}>
         <Card.Img
           className="movie-image"
           crossOrigin="anonymous"

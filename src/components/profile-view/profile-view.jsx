@@ -229,7 +229,7 @@ export class ProfileView extends React.Component {
               </Row>
             </Card.Body>
           </Card>
-
+          <br></br>
           <Card>
             <Form>
               <h3>Profile</h3>

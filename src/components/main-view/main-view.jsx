@@ -150,6 +150,29 @@ export default class MainView extends React.Component {
           />
 
           <Route
+            path="/moviesearch/:title"
+            render={({ match, history }) => {
+              if (!user) {
+                return (
+                  <Col>
+                    <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+                  </Col>
+                );
+              } else {
+                return (
+                  <Col>
+                    <MovieCard
+                      user={user}
+                      movie={movies.find((m) => m.Title === match.params.Title)}
+                      onBackClick={() => history.goBack()}
+                    />
+                  </Col>
+                );
+              }
+            }}
+          />
+
+          <Route
             path="/directors/:name"
             render={({ match, history }) => {
               if (!user)

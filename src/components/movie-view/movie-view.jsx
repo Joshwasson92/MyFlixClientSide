@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import Button from "react-bootstrap/Button";
+import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { MovieUser } from "../login-view/login-view";
@@ -87,48 +87,44 @@ export class MovieView extends React.Component {
   render() {
     const { movie, onBackClick } = this.props;
     return (
-      <div className="movie-view">
-        <img
-          className="movie-poster"
-          crossOrigin="anonymous"
-          src={movie.ImagePath}
-        />
+      <Card>
+        <div className="movie-view">
+          <img
+            className="movie-poster"
+            crossOrigin="anonymous"
+            src={movie.ImagePath}
+          />
 
-        <div className="movie-title">
-          <span className="label">Title: </span>
-          <span className="value">{movie.Title}</span>
-        </div>
-        <div className="movie-description">
-          <span className="label">Description: </span>
-          <span className="value">{movie.Description}</span>
-        </div>
+          <Card.Title>{movie.Title}</Card.Title>
+          <Card.Text>{movie.Description}</Card.Text>
+          <div>
+            <Link to={`/directors/${movie.Director.Name}`}>
+              <Button variant="link">Director</Button>
+            </Link>
+          </div>
+          <div>
+            <Link to={`/genres/${movie.Genre.Name}`}>
+              <Button variant="link">{movie.Genre.Name}</Button>
+            </Link>
+          </div>
 
-        <div>
-          <Link to={`/directors/${movie.Director.Name}`}>
-            <Button variant="link">Director</Button>
-          </Link>
+          <Button
+            onClick={() => {
+              onBackClick(null);
+            }}
+          >
+            Back
+          </Button>
+          <Button
+            onClick={() => {
+              this.addMovieList();
+            }}
+          >
+            Add to list
+          </Button>
         </div>
-        <div>
-          <Link to={`/genres/${movie.Genre.Name}`}>
-            <Button variant="link">{movie.Genre.Name}</Button>
-          </Link>
-        </div>
-
-        <Button
-          onClick={() => {
-            onBackClick(null);
-          }}
-        >
-          Back
-        </Button>
-        <Button
-          onClick={() => {
-            this.addMovieList();
-          }}
-        >
-          Add to list
-        </Button>
-      </div>
+        <br></br>
+      </Card>
     );
   }
 }

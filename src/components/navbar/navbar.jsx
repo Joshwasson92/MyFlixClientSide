@@ -1,11 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Navbar, Container, Nav, Button } from "react-bootstrap";
+import { MovieView } from "../movie-view/movie-view";
+import {
+  Navbar,
+  Container,
+  Nav,
+  Button,
+  Form,
+  FormControl,
+} from "react-bootstrap";
+import axios from "axios";
 
 export function Menu({ user }) {
+  const [searchText, setSearchText] = useState("");
+  const [movie, setMovie] = useState();
+
   const onLoggedOut = () => {
     localStorage.clear();
     window.open("/", "_self");
+  };
+
+  function getMovie() {
+    axios
+      .get(`https://jwmovieapi.herokuapp.com/moviesearch/${searchText}`, {
+        headers: { Authorization: `Bearer ${isAuth()}` },
+      })
+      .then((response) => {
+        setMovie(response.data);
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  const handleSearchInput = (event) => {
+    setSearchText(event.target.value);
+  };
+
+  const handleSearchSubmit = () => {
+    if (searchText) {
+      getMovie();
+    } else {
+      alert("Please enter a movie title!");
+    }
   };
 
   const isAuth = () => {
@@ -45,6 +83,24 @@ export function Menu({ user }) {
             {!isAuth() && <Nav.Link href="/register">Sign-up</Nav.Link>}
           </nav>
         </Navbar.Collapse>
+        {isAuth() && (
+          <Form inline="true">
+            <FormControl
+              onChange={handleSearchInput}
+              type="text"
+              placeholder="Search"
+              className="mr-sm-2"
+            />
+            <Button
+              onClick={() => {
+                handleSearchSubmit();
+              }}
+              variant="outline-info"
+            >
+              Search
+            </Button>
+          </Form>
+        )}
       </Container>
     </Navbar>
   );
