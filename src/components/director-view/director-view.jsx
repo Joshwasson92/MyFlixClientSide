@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -9,21 +10,15 @@ export class DirectorView extends React.Component {
     const { director, onBackClick } = this.props;
 
     return (
-      <div className="director-view">
-        <div className="director-name">
-          <span className="label">Name: </span>
-          <span className="value">{director.Name}</span>
-        </div>
+      <Card className="director-view">
+        <Card.Title className="text-center">{director.Name} </Card.Title>
 
-        <div className="director-dob">
-          <span className="label">Birthday: </span>
-          <span className="value">{director.Birthday}</span>
-        </div>
+        <span className="text-center label">
+          Birthday: {director.Birthday}{" "}
+        </span>
 
-        <div className="director-bio">
-          <span className="label">Bio: </span>
-          <span className="value">{director.Bio}</span>
-        </div>
+        <Card.Body className="label">{director.Bio} </Card.Body>
+
         <Button
           onClick={() => {
             onBackClick(null);
@@ -31,7 +26,17 @@ export class DirectorView extends React.Component {
         >
           Back
         </Button>
-      </div>
+      </Card>
     );
   }
 }
+
+DirectorView.propTypes = {
+  director: PropTypes.shape({
+    Name: PropTypes.string.isRequired,
+    Bio: PropTypes.string.isRequired,
+    Birthday: PropTypes.string.isRequired,
+  }).isRequired,
+
+  onBackClick: PropTypes.func.isRequired,
+};

@@ -87,7 +87,7 @@ export class MovieView extends React.Component {
   render() {
     const { movie, onBackClick } = this.props;
     return (
-      <Card>
+      <Card className="movie-view-card">
         <div className="movie-view">
           <img
             className="movie-poster"
@@ -95,16 +95,20 @@ export class MovieView extends React.Component {
             src={movie.ImagePath}
           />
 
-          <Card.Title>{movie.Title}</Card.Title>
+          <Card.Title className="text-center">{movie.Title}</Card.Title>
           <Card.Text>{movie.Description}</Card.Text>
           <div>
             <Link to={`/directors/${movie.Director.Name}`}>
-              <Button variant="link">Director</Button>
+              <Button variant="secondary" size="sm">
+                Director
+              </Button>
             </Link>
           </div>
           <div>
             <Link to={`/genres/${movie.Genre.Name}`}>
-              <Button variant="link">{movie.Genre.Name}</Button>
+              <Button variant="secondary" size="sm">
+                {movie.Genre.Name}
+              </Button>
             </Link>
           </div>
 
@@ -128,3 +132,18 @@ export class MovieView extends React.Component {
     );
   }
 }
+
+MovieView.propTypes = {
+  movie: PropTypes.shape({
+    Title: PropTypes.string.isRequired,
+    Genre: PropTypes.shape({
+      Name: PropTypes.string.isRequired,
+    }).isRequired,
+    Director: PropTypes.shape({
+      Name: PropTypes.string.isRequired,
+    }).isRequired,
+    Description: PropTypes.string.isRequired,
+    ImagePath: PropTypes.string.isRequired,
+  }).isRequired,
+  onBackClick: PropTypes.func.isRequired,
+};

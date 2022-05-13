@@ -3,10 +3,11 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { Menu } from "../navbar/navbar";
+import { Menu } from "../menu/menu";
 import { RegistrationView } from "../registration-view/registration-view";
 import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
 import "./login-view.scss";
+import PropTypes from "prop-types";
 
 function RegisterUser(props) {
   return <RegistrationView></RegistrationView>;
@@ -68,7 +69,7 @@ export function LoginView(props) {
   return (
     <Form>
       <Form.Group controlId="formUsername">
-        <Form.Label>Username:</Form.Label>
+        <Form.Label className="reg-form-inputs">Username:</Form.Label>
         <Form.Control
           type="text"
           placeholder="Enter username"
@@ -80,7 +81,7 @@ export function LoginView(props) {
       </Form.Group>
 
       <Form.Group controlId="formPassword">
-        <Form.Label>Password</Form.Label>
+        <Form.Label className="reg-form-inputs">Password</Form.Label>
         <Form.Control
           type="password"
           placeholder="Password"
@@ -100,3 +101,7 @@ export function LoginView(props) {
     </Form>
   );
 }
+
+LoginView.propTypes = {
+  onLoggedIn: PropTypes.func.isRequired,
+};

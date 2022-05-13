@@ -10,41 +10,15 @@ import {
   FormControl,
 } from "react-bootstrap";
 import axios from "axios";
+import "./menu.scss";
 
-export function Menu({ user }) {
-  const [searchText, setSearchText] = useState("");
-  const [movie, setMovie] = useState();
-
+export function Menu(props) {
   const onLoggedOut = () => {
     localStorage.clear();
     window.open("/", "_self");
   };
 
-  function getMovie() {
-    axios
-      .get(`https://jwmovieapi.herokuapp.com/moviesearch/${searchText}`, {
-        headers: { Authorization: `Bearer ${isAuth()}` },
-      })
-      .then((response) => {
-        setMovie(response.data);
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-
-  const handleSearchInput = (event) => {
-    setSearchText(event.target.value);
-  };
-
-  const handleSearchSubmit = () => {
-    if (searchText) {
-      getMovie();
-    } else {
-      alert("Please enter a movie title!");
-    }
-  };
+  const user = props.user;
 
   const isAuth = () => {
     if (typeof window == "undefined") {
@@ -84,21 +58,15 @@ export function Menu({ user }) {
           </nav>
         </Navbar.Collapse>
         {isAuth() && (
-          <Form inline="true">
+          <Form
+            inline="true"
+            onChange={(event) => props.onSearchBarChange(event)}
+          >
             <FormControl
-              onChange={handleSearchInput}
               type="text"
-              placeholder="Search"
+              placeholder="Search titles!"
               className="mr-sm-2"
             />
-            <Button
-              onClick={() => {
-                handleSearchSubmit();
-              }}
-              variant="outline-info"
-            >
-              Search
-            </Button>
           </Form>
         )}
       </Container>

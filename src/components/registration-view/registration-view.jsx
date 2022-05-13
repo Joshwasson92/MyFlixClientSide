@@ -4,7 +4,7 @@ import { Row, Col, Button, Container, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import "./registration-view.scss";
-import { Menu } from "../navbar/navbar";
+import { Menu } from "../menu/menu";
 
 export function RegistrationView(props) {
   const [username, setUsername] = useState("");
@@ -82,7 +82,7 @@ export function RegistrationView(props) {
     <Row className="mt-5">
       <Col md={12}>
         <Form>
-          <h3> Sign Up</h3>
+          <h3 className="reg-form-inputs"> Sign Up</h3>
           <p></p>
           <Form.Group controlid="formUsername" className="reg-form-inputs">
             <Form.Label>Username:</Form.Label>
@@ -117,6 +117,13 @@ export function RegistrationView(props) {
             {values.emailErr && <p>{values.emailErr}</p>}
             <Button variant="primary" type="submit" onClick={handleSubmit}>
               Submit
+            </Button>
+            <Button
+              onClick={() => {
+                onBackClick(null);
+              }}
+            >
+              Back
             </Button>
           </Form.Group>
         </Form>

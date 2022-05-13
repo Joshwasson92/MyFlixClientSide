@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Row, Col, Button, Container, Form, Card } from "react-bootstrap";
 import { MovieUser } from "../login-view/login-view";
 import { LoginView } from "../login-view/login-view";
+import PropTypes from "prop-types";
 import "./profile-view.scss";
 
 export class ProfileView extends React.Component {
@@ -274,11 +275,10 @@ export class ProfileView extends React.Component {
                     type="date"
                     name="birthday"
                     placeholder="Birthday"
-                    //   value={birthday}
                     onChange={(e) => this.setBirthday(e.target.value)}
                   />
                 </Form.Group>
-                {/* {values.emailErr && <p>{values.emailErr}</p>} */}
+                {values.emailErr && <p>{values.emailErr}</p>}
                 <Button
                   variant="primary"
                   type="submit"
@@ -300,13 +300,12 @@ export class ProfileView extends React.Component {
     );
   }
 }
-// }
 
-// ProfileView.propTypes = {
-//   updateUser: PropTypes.shape({
-//     Username: PropTypes.string.isRequired,
-//     Password: PropTypes.string.isRequired,
-//     Email: PropTypes.string.isRequired,
-//     Birthday: PropTypes.string.isRequired,
-//   }),
-// };
+ProfileView.propTypes = {
+  updateUser: PropTypes.shape({
+    Username: PropTypes.string.isRequired,
+    Password: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
+    Birthday: PropTypes.string.isRequired,
+  }),
+};
