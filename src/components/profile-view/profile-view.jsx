@@ -278,7 +278,6 @@ export class ProfileView extends React.Component {
                     onChange={(e) => this.setBirthday(e.target.value)}
                   />
                 </Form.Group>
-                {values.emailErr && <p>{values.emailErr}</p>}
                 <Button
                   variant="primary"
                   type="submit"

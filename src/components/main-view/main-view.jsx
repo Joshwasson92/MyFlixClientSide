@@ -252,5 +252,4 @@ MainView.propTypes = {
       Description: PropTypes.string.isRequired,
     })
   ),
-  getMovies: PropTypes.func.isRequired,
 };
