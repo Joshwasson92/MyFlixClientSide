@@ -5,6 +5,10 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import "./director-view.scss";
 
+/**
+ * @module DirectorView
+ * Class component for director view.
+ */
 export class DirectorView extends React.Component {
   render() {
     const { director, onBackClick } = this.props;
@@ -31,6 +35,9 @@ export class DirectorView extends React.Component {
   }
 }
 
+/**
+ * PropTypes validation.
+ */
 DirectorView.propTypes = {
   director: PropTypes.shape({
     Name: PropTypes.string.isRequired,

@@ -19,6 +19,9 @@ import { GenreView } from "../genre-view/genre-view";
 import { ProfileView } from "../profile-view/profile-view";
 import "./main-view.scss";
 
+/**
+ * @module MainView
+ */
 export default class MainView extends React.Component {
   constructor(props) {
     super(props);
@@ -41,6 +44,10 @@ export default class MainView extends React.Component {
     }
   }
 
+  /**
+   *Filters movies with event listener based on user input.
+   * @param {*} event
+   */
   onSearchBarChange = (event) => {
     const searchTerm = event.target.value;
     const temporalData = this.state.movies.filter((movies) => {
@@ -52,6 +59,10 @@ export default class MainView extends React.Component {
     });
   };
 
+  /**
+   *On successful login, the state will be set with the new token and username.
+   * @param {*} authData
+   */
   onLoggedIn(authData) {
     console.log(authData);
     this.setState({
@@ -63,13 +74,17 @@ export default class MainView extends React.Component {
     this.getMovies(authData.token);
   }
 
+  /**
+   *
+   * Makes API call to to retreive movies as long as the token is valid.
+   * @param {*} token
+   */
   getMovies(token) {
     axios
       .get("https://jwmovieapi.herokuapp.com/movies", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        // Assign the result to the state
         this.setState({
           movies: response.data,
           filteredMovies: response.data,
@@ -244,6 +259,9 @@ export default class MainView extends React.Component {
   }
 }
 
+/**
+ * PropTypes validation.
+ */
 MainView.propTypes = {
   movies: PropTypes.arrayOf(
     PropTypes.shape({

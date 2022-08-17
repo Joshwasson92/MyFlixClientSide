@@ -6,22 +6,29 @@ import PropTypes from "prop-types";
 import { MovieUser } from "../login-view/login-view";
 import "./movie-view.scss";
 
+/**
+ * @module MovieView
+ */
 export class MovieView extends React.Component {
+  /**@Constructor */
   constructor() {
     super();
 
     this.state = { user: "", FavoriteMovies: [] };
   }
 
+  /**
+   * @module
+   *       event contains
+      key – the key that was changed
+      oldValue – the old value
+      newValue – the new value
+      url –
+      storageArea – either localStorage or sessionStorage object where the update happened.
+   * @param {object} authData
+   */
   onLoggedIn(authData) {
-    window.addEventListener("storage", (event) => {
-      // event contains
-      // key – the key that was changed
-      // oldValue – the old value
-      // newValue – the new value
-      // url –
-      // storageArea – either localStorage or sessionStorage object where the update happened.
-    });
+    window.addEventListener("storage", (event) => {});
     console.log(authData);
     this.setState({
       user: authData.user.Username,
@@ -30,6 +37,11 @@ export class MovieView extends React.Component {
     this.getMovies(authData.token);
   }
 
+  /**
+   *Makes an API call to remove a selected movie from the users favorite list.
+   * @param {event} e
+   * @param {array} movies
+   */
   removeMovieList = (e, movies) => {
     const user = this.props.username;
     const token = localStorage.getItem("token");
@@ -55,9 +67,12 @@ export class MovieView extends React.Component {
       });
   };
 
+  /**
+   *Adds a selected movie to the users favorite list.
+   * @param {event} e
+   * @param {array} movies
+   */
   addMovieList = (e, movies) => {
-    // e.preventDefault();
-
     <MovieUser />;
     const user = this.props.username;
 
@@ -133,6 +148,9 @@ export class MovieView extends React.Component {
   }
 }
 
+/**
+ * PropTypes validation.
+ */
 MovieView.propTypes = {
   movie: PropTypes.shape({
     Title: PropTypes.string.isRequired,

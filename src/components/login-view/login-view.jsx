@@ -9,6 +9,12 @@ import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
 import "./login-view.scss";
 import PropTypes from "prop-types";
 
+/**
+ * If the user selects register, it will direct them to the Registration View.
+ * @module RegisterUser
+ * @param {object} props
+ * @returns Registration view.
+ */
 function RegisterUser(props) {
   return <RegistrationView></RegistrationView>;
 }
@@ -17,16 +23,22 @@ export function MovieUser(props) {
   return <MovieView></MovieView>;
 }
 
+/**
+ * Uses hooks for user imput for username and password
+ * @param {Array} props
+ * @returns
+ */
 export function LoginView(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  // Hook for inputs
-
   const [usernameErr, setUsernameErr] = useState("");
   const [passwordErr, setPasswordErr] = useState("");
 
-  //Validate user input
+  /**
+   * Form validation for user login.
+   * @returns boolean
+   */
   const validate = () => {
     let isReq = true;
     if (!username) {
@@ -102,6 +114,9 @@ export function LoginView(props) {
   );
 }
 
+/**
+ * PropTypes validation.
+ */
 LoginView.propTypes = {
   onLoggedIn: PropTypes.func.isRequired,
 };

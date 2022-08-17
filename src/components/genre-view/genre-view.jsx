@@ -5,6 +5,10 @@ import { Link } from "react-router-dom";
 import "./genre-view.scss";
 import PropTypes from "prop-types";
 
+/**
+ * Class component for genre view.
+ * @module GenreView
+ */
 export class GenreView extends React.Component {
   render() {
     const { genre, onBackClick } = this.props;
@@ -31,6 +35,9 @@ export class GenreView extends React.Component {
   }
 }
 
+/**
+ * PropTypes validation.
+ */
 GenreView.propTypes = {
   genre: PropTypes.shape({
     Name: PropTypes.string.isRequired,

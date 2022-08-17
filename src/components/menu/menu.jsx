@@ -12,7 +12,15 @@ import {
 import axios from "axios";
 import "./menu.scss";
 
+/**
+ * @module Menu
+ * @param {object} props
+ * @returns Navbar
+ */
 export function Menu(props) {
+  /**
+   * When logged out it clears local storage of user and token.
+   */
   const onLoggedOut = () => {
     localStorage.clear();
     window.open("/", "_self");
@@ -20,6 +28,10 @@ export function Menu(props) {
 
   const user = props.user;
 
+  /**
+   *
+   * @returns Boolean for token authorization. if no token is returned, its false.
+   */
   const isAuth = () => {
     if (typeof window == "undefined") {
       return false;

@@ -11,15 +11,16 @@ export function RegistrationView(props) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [values, setValues] = useState({
-    // Hooks
-
+    /**Hooks */
     usernameErr: "",
     passwordErr: "",
     emailErr: "",
   });
 
-  //user validation
-
+  /**
+   * Form validation for user registration.
+   * @returns validated or not validated.
+   */
   const validate = () => {
     let isReq = true;
 
@@ -54,6 +55,10 @@ export function RegistrationView(props) {
     return isReq;
   };
 
+  /**
+   * API call to generate a new user
+   * @param {(e)} event
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
     const isReq = validate();
@@ -132,6 +137,9 @@ export function RegistrationView(props) {
   );
 }
 
+/**
+ * PropTypes validation.
+ */
 RegistrationView.propTypes = {
   register: PropTypes.shape({
     Username: PropTypes.string.isRequired,

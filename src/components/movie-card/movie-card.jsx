@@ -7,6 +7,10 @@ import { Link } from "react-router-dom";
 import { LoginView } from "../login-view/login-view";
 import "./movie-card.scss";
 
+/**
+ * @module MovieCard
+ * Indivdual card for selected movie.
+ */
 export class MovieCard extends React.Component {
   render() {
     const { movie } = this.props;
@@ -30,6 +34,9 @@ export class MovieCard extends React.Component {
   }
 }
 
+/**
+ * PropTypes validation.
+ */
 MovieCard.propTypes = {
   movie: PropTypes.shape({
     ImagePath: PropTypes.string.isRequired,

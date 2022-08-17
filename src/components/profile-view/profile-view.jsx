@@ -1,14 +1,15 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Row, Col, Button, Container, Form, Card } from "react-bootstrap";
 import { MovieUser } from "../login-view/login-view";
 import { LoginView } from "../login-view/login-view";
-import PropTypes from "prop-types";
 import "./profile-view.scss";
 
+/**
+ * Profile View Page
+ */
 export class ProfileView extends React.Component {
   constructor(props) {
     super(props);
@@ -21,10 +22,14 @@ export class ProfileView extends React.Component {
       FavoriteMovies: [],
     };
   }
+
   componentDidMount() {
     this.getUser();
   }
 
+  /**
+   * Defining user as current props and retreiving JWT token and making an API call to get user information.
+   */
   getUser() {
     const user = this.props.user;
     const token = localStorage.getItem("token");
@@ -49,6 +54,10 @@ export class ProfileView extends React.Component {
       });
   }
 
+  /**
+   *
+   * @param {string} favMovies
+   */
   findFavMovies(favMovies) {
     const token = localStorage.getItem("token");
 
@@ -69,6 +78,9 @@ export class ProfileView extends React.Component {
       });
   }
 
+  /**
+   * API call to retreive a users favorite movies array.
+   */
   getFavMovies() {
     const user = this.props.user;
     const token = localStorage.getItem("token");
@@ -82,6 +94,9 @@ export class ProfileView extends React.Component {
       });
   }
 
+  /**
+   * When logging out, will clear local storage items.
+   */
   onLoggedOut() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -90,7 +105,10 @@ export class ProfileView extends React.Component {
     });
     window.open("/", "_self");
   }
-
+  /**
+   *Makes API call to update a users profile information and updates local stoarge with the updated state.
+   * @param {event} e
+   */
   updateUser = (e) => {
     e.preventDefault();
     const user = localStorage.getItem("user");
@@ -123,30 +141,49 @@ export class ProfileView extends React.Component {
       });
   };
 
+  /**
+   * Sets the state with the current username
+   * @param {string} value
+   */
   setUsername(value) {
     this.setState({
       Username: value,
     });
   }
 
+  /**
+   * Sets the state with the current password
+   * @param {string} value
+   */
   setPassword(value) {
     this.setState({
       Password: value,
     });
   }
 
+  /**
+   * Sets the state with the current email
+   * @param {string} value
+   */
   setEmail(value) {
     this.setState({
       Email: value,
     });
   }
 
+  /**
+   * Sets the state with the current birthday
+   * @param {date} value
+   */
   setBirthday(value) {
     this.setState({
       Birthday: value,
     });
   }
-
+  /**
+   * Makes API call to delete users account and then clears localstorage.
+   * @param {string} value
+   */
   deleteAccount() {
     const user = this.props.user;
     const token = localStorage.getItem("token");
@@ -170,6 +207,10 @@ export class ProfileView extends React.Component {
       });
   }
 
+  /**
+   * Makes an API call to emove a specific movie from the users favorite movies array.
+   * @param {string} _id
+   */
   removeFavMovie = (_id) => {
     const user = this.props.user;
     const token = localStorage.getItem("token");
@@ -195,9 +236,6 @@ export class ProfileView extends React.Component {
     const { movie, FavoriteMovies, onBackClick } = this.props;
     const { user } = this.state;
 
-    // if (!user) {
-    //   return <LoginView />;
-    // } else {
     return (
       <Row className="mt-5">
         <Col md={12}>
@@ -300,6 +338,9 @@ export class ProfileView extends React.Component {
   }
 }
 
+/**
+ * PropTypes validation.
+ */
 ProfileView.propTypes = {
   updateUser: PropTypes.shape({
     Username: PropTypes.string.isRequired,
